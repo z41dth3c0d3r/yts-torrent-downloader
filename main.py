@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 import sys
+import json
+
 
 if (
     len(sys.argv) == 1
@@ -15,7 +17,9 @@ if (
     -mr movie rating  (1 to 9)
     -o  order by      (run "main.py -showOrders to view orders")
     -my movie year    (year of the movie like 2021)
-    -l  language      run "main.py -showLanguages to view all languages" """
+    -l  language      run "main.py -showLanguages to view all languages"
+
+    -show showing number of movies"""
 
     # url structure
     # https://yts.mx/browse-movies/hack/720p/action/4/oldest/2019/foreign
@@ -172,43 +176,70 @@ elif (len(sys.argv) == 2) and (
 
 elif len(sys.argv) >= 2:
 
+    # concatanating command line args to url for get request
+
     baseURL = "https://yts.mx/browse-movies"
+
+    # output file name based on args
+
+    fileName = ""
 
     if "-mt" in sys.argv:
         baseURL += "/" + sys.argv[sys.argv.index("-mt") + 1]
+        fileName += sys.argv[sys.argv.index("-mt") + 1] + "_"
     else:
         baseURL += "/" + str(0)
+        fileName += "movies" + "_"
     if "-mq" in sys.argv:
         baseURL += "/" + sys.argv[sys.argv.index("-mq") + 1]
+        fileName += sys.argv[sys.argv.index("-mq") + 1] + "_"
     else:
         baseURL += "/" + "all"
+        fileName += "allQuality" + "_"
     if "-mg" in sys.argv:
         baseURL += "/" + sys.argv[sys.argv.index("-mg") + 1]
+        fileName += sys.argv[sys.argv.index("-mg") + 1] + "_"
     else:
         baseURL += "/" + "all"
+        fileName += "allGenre" + "_"
     if "-mr" in sys.argv:
         baseURL += "/" + sys.argv[sys.argv.index("-mr") + 1]
+        fileName += sys.argv[sys.argv.index("-mr") + 1] + "_"
     else:
         baseURL += "/" + str(0)
+        fileName += "allRating" + "_"
     if "-o" in sys.argv:
         baseURL += "/" + sys.argv[sys.argv.index("-o") + 1]
+        fileName += sys.argv[sys.argv.index("-o") + 1] + "_"
     else:
         baseURL += "/" + "latest"
+        fileName += "OrderdBylatest" + "_"
     if "-my" in sys.argv:
         baseURL += "/" + sys.argv[sys.argv.index("-my") + 1]
+        fileName += sys.argv[sys.argv.index("-my") + 1] + "_"
     else:
         baseURL += "/" + str(0)
+        fileName += "allYear" + "_"
     if "-l" in sys.argv:
         baseURL += "/" + sys.argv[sys.argv.index("-l") + 1]
+        fileName += sys.argv[sys.argv.index("-l") + 1] + "_"
     else:
         baseURL += "/" + "all"
+        fileName += "allLanguages" + "_"
+    if "-show" in sys.argv:
+        show = sys.argv[sys.argv.index("-show") + 1]
+    else:
+        show = 5
+        fileName += "5_Movies"
 
-    yts_serach = requests.get(baseURL)
+    firstPage = requests.get(baseURL)
 
-    pageContent = BeautifulSoup(yts_serach.content, "html.parser")
+    firstPageContent = BeautifulSoup(firstPage.content, "html.parser")
+
+    # getting total number of movies in get request
 
     totalMovies = (
-        pageContent.find(class_="browse-content")
+        firstPageContent.find(class_="browse-content")
         .find(class_="container")
         .find("h2")
         .find("b")
@@ -217,28 +248,110 @@ elif len(sys.argv) >= 2:
 
     print("Total Movies : " + totalMovies)
 
-    movies = (
-        pageContent.find(class_="browse-content")
-        .find(class_="container")
-        .find(class_="row")
-        .find_all(class_="browse-movie-wrap")
-    )
     moviesWithDetails = {}
-    Genres = []
-    for movie in movies:
-        title = movie.find(class_="browse-movie-bottom").find("a").get_text()
-        year = movie.find(class_="browse-movie-bottom").find("div").get_text()
-        rating = movie.find(class_="browse-movie-link").find(class_="rating").get_text()
-        genres = movie.find(class_="browse-movie-link").find_all("h4")
-        for genre in genres:
-            Genres.append(genre.get_text())
-        Genres.pop(0)
-        moviesWithDetails[title] = {
-            "title": title,
-            "year": year,
-            "ratings": rating,
-            "genres": Genres,
-        }
-        Genres = []
 
-    print(moviesWithDetails)
+    # loop through pages wchich is given via -show arg other wise 10 movies
+    # determining how many pages based on show args
+    if int(totalMovies.replace(",", "")) < int(show):
+        show = totalMovies
+
+    fileName += str(show) + "_Movies.json"
+
+    # calculating total pages to scrap
+
+    total_pages = int(int(show) / 20)
+
+    if total_pages <= 0 or int(show) % 20 > 0:
+        total_pages += 1
+
+    totalMoviesEncoutered = 0
+
+    # loop through calculated pages
+
+    for i in range(1, total_pages + 1):
+        if i == 1:
+            dynamiURL = baseURL
+        else:
+            dynamiURL = baseURL + "?page=" + str(i)
+        paginationPages = requests.get(dynamiURL)
+        pageContent = BeautifulSoup(paginationPages.content, "html.parser")
+
+        # movie variable storing all movie details in a single page
+
+        movies = (
+            pageContent.find(class_="browse-content")
+            .find(class_="container")
+            .find(class_="row")
+            .find_all(class_="browse-movie-wrap")
+        )
+        Genres = []
+        for movie in movies:
+
+            if totalMoviesEncoutered == int(show):
+                break
+
+            # getting title of the movie
+
+            title = (
+                movie.find(class_="browse-movie-bottom")
+                .find(class_="browse-movie-title")
+                .get_text()
+            )
+
+            # holding download links
+
+            linkToMovie = movie.find(class_="browse-movie-bottom").find(
+                class_="browse-movie-title"
+            )["href"]
+
+            # getting download link of torrent file
+
+            downloadPage = requests.get(linkToMovie)
+            downloadPageContent = BeautifulSoup(downloadPage.content, "html.parser")
+            realDownloadLinks = dict()
+            if downloadPageContent.find(id="movie-info") != None:
+                downloadLinks = (
+                    downloadPageContent.find(id="movie-info")
+                    .find(class_="hidden-md hidden-lg")
+                    .find_all("a")
+                )
+                for downloadLink in downloadLinks:
+                    if downloadLink.get_text() != "Download Subtitles":
+                        realDownloadLinks[downloadLink.get_text()] = downloadLink[
+                            "href"
+                        ]
+
+            # getting year of the movie
+
+            year = (
+                movie.find(class_="browse-movie-bottom")
+                .find(class_="browse-movie-year")
+                .get_text()
+            )
+
+            # getting rating of the movie
+
+            rating = movie.find(class_="browse-movie-link").find(class_="rating")
+            if rating != None:
+                rating = rating.get_text()
+
+            # gettig genre of the movie
+            genres = movie.find(class_="browse-movie-link").find_all("h4")
+            for genre in genres:
+                Genres.append(genre.get_text())
+            Genres.pop(0)
+
+            moviesWithDetails[title] = {
+                "title": title,
+                "year": year,
+                "ratings": rating,
+                "genres": Genres,
+                "download links": realDownloadLinks,
+            }
+            Genres = []
+            realDownloadLinks = {}
+            totalMoviesEncoutered = totalMoviesEncoutered + 1
+
+    outputFile = open(fileName, "w")
+    outputFile.write(json.dumps(moviesWithDetails))
+    outputFile.close()

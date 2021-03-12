@@ -1,0 +1,52 @@
+{
+  "Insight": {
+    "title": "Insight",
+    "year": "2021",
+    "ratings": null,
+    "genres": [],
+    "download links": {
+      "720p.WEB": "https://yts.mx/torrent/download/07D32996D2883CE4F00DCC9701D22703F530B994",
+      "1080p.WEB": "https://yts.mx/torrent/download/F9DBBEFE2A7576C6BEFBFDA5F55F6E89C4110180"
+    }
+  },
+  "Just Noise": {
+    "title": "Just Noise",
+    "year": "2021",
+    "ratings": "5.6 / 10",
+    "genres": ["Action"],
+    "download links": {
+      "720p.WEB": "https://yts.mx/torrent/download/C1A22A6443FAFB3214CA53ACBF44B239A9139326",
+      "1080p.WEB": "https://yts.mx/torrent/download/1C661E9BF2E3D85C9D7BCB47CFB1CE4B29C49297"
+    }
+  },
+  "The Vault": {
+    "title": "The Vault",
+    "year": "2021",
+    "ratings": "6.8 / 10",
+    "genres": ["Action", "Adventure"],
+    "download links": {
+      "720p.WEB": "https://yts.mx/torrent/download/5611963291F782AEDB15BB90FAC98DBCD1825417",
+      "1080p.WEB": "https://yts.mx/torrent/download/62C09C34B68B89DC5441F99E7186C5F22D91057C"
+    }
+  },
+  "The 26th Annual Critics' Choice Awards": {
+    "title": "The 26th Annual Critics' Choice Awards",
+    "year": "2021",
+    "ratings": "6 / 10",
+    "genres": ["Action"],
+    "download links": {
+      "720p.WEB": "https://yts.mx/torrent/download/5BAE1F2E8F765D86D12B50FEA8639243F9264FB4",
+      "1080p.WEB": "https://yts.mx/torrent/download/784F14C63AA7C3AF94585A1D4E6D6A91F949B013"
+    }
+  },
+  "Dark Web: Cicada 3301": {
+    "title": "Dark Web: Cicada 3301",
+    "year": "2021",
+    "ratings": "4.9 / 10",
+    "genres": ["Action", "Comedy"],
+    "download links": {
+      "720p.BluRay": "https://yts.mx/torrent/download/60DF84D62A788A2F0CB5A72571A47D7712389BB9",
+      "1080p.BluRay": "https://yts.mx/torrent/download/9325E0DA34683F18ABAC881F93DB54437852FF3E"
+    }
+  }
+}
