@@ -1,0 +1,23 @@
+{
+  "totalMovies": "2",
+  "The Fast and the Furious": {
+    "title": "The Fast and the Furious",
+    "year": "2001",
+    "ratings": "6.8 / 10",
+    "genres": ["Action", "Adventure"],
+    "download links": {
+      "720p.BluRay": "https://yts.mx/torrent/download/E2E8994ABCD885C44C3B5B1DA5B0D0254AE29FBA",
+      "1080p.BluRay": "https://yts.mx/torrent/download/F6156A11AA8594553A63EDCD5AC337D9A667E402"
+    }
+  },
+  "The Fast and the Furious: Tokyo Drift": {
+    "title": "The Fast and the Furious: Tokyo Drift",
+    "year": "2006",
+    "ratings": "6 / 10",
+    "genres": ["Action", "Crime"],
+    "download links": {
+      "720p.BluRay": "https://yts.mx/torrent/download/04B8E318E8A6AF5C4747B58B9D5A7470C71B9CEC",
+      "1080p.BluRay": "https://yts.mx/torrent/download/60C3A40BEF2CB10A3068430692815AE122ECC892"
+    }
+  }
+}

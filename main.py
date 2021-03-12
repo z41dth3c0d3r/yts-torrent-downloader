@@ -1,7 +1,29 @@
+import itertools
+import threading
+import time
 import requests
 from bs4 import BeautifulSoup
 import sys
 import json
+
+# output file name based on args
+
+fileName = ""
+done = False
+start_time = 0
+# here is the animation
+def animate():
+    for c in itertools.cycle(["|", "/", "-", "\\"]):
+        if done:
+            break
+        sys.stdout.write("\rScrapping " + c)
+        sys.stdout.flush()
+        time.sleep(0.1)
+    sys.stdout.flush()
+    totalTimeTaken = time.time() - start_time
+    sys.stdout.write("\rDone!     ")
+    print("\nTotal Time Taken : " + str(round(totalTimeTaken, 2)) + " Seconds")
+    print("Data Written to " + str(fileName))
 
 
 if (
@@ -180,10 +202,6 @@ elif len(sys.argv) >= 2:
 
     baseURL = "https://yts.mx/browse-movies"
 
-    # output file name based on args
-
-    fileName = ""
-
     if "-mt" in sys.argv:
         baseURL += "/" + sys.argv[sys.argv.index("-mt") + 1]
         fileName += sys.argv[sys.argv.index("-mt") + 1] + "_"
@@ -234,6 +252,11 @@ elif len(sys.argv) >= 2:
 
     firstPage = requests.get(baseURL)
 
+    start_time = time.time()
+
+    t = threading.Thread(target=animate)
+    t.start()
+
     firstPageContent = BeautifulSoup(firstPage.content, "html.parser")
 
     # getting total number of movies in get request
@@ -246,9 +269,9 @@ elif len(sys.argv) >= 2:
         .get_text()
     )
 
-    print("Total Movies : " + totalMovies)
-
     moviesWithDetails = {}
+
+    moviesWithDetails["totalMovies"] = totalMovies
 
     # loop through pages wchich is given via -show arg other wise 10 movies
     # determining how many pages based on show args
@@ -355,3 +378,4 @@ elif len(sys.argv) >= 2:
     outputFile = open(fileName, "w")
     outputFile.write(json.dumps(moviesWithDetails))
     outputFile.close()
+    done = True

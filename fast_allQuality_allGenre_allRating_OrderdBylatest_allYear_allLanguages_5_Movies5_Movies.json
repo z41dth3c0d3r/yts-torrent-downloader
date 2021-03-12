@@ -1,0 +1,55 @@
+{
+  "totalMovies": "25",
+  "Faster": {
+    "title": "Faster",
+    "year": "2003",
+    "ratings": "7.8 / 10",
+    "genres": ["Documentary"],
+    "download links": {
+      "720p.WEB": "https://yts.mx/torrent/download/F0F5E9D7C98F885D2E78B3BE9D604EDF226C041C",
+      "1080p.WEB": "https://yts.mx/torrent/download/9B227457F918A757B47C2718D0EBFF957A10D1D9"
+    }
+  },
+  "Breaking Fast": {
+    "title": "Breaking Fast",
+    "year": "2020",
+    "ratings": "5.7 / 10",
+    "genres": ["Comedy", "Drama"],
+    "download links": {
+      "720p.WEB": "https://yts.mx/torrent/download/C2924B6D330C5335ACB5F2362D114A112B1A9382",
+      "1080p.WEB": "https://yts.mx/torrent/download/98C3705501F17E9CB7132C7A68207023D1EF5405"
+    }
+  },
+  "Fast and Fierce: Death Race": {
+    "title": "Fast and Fierce: Death Race",
+    "year": "2020",
+    "ratings": "2.1 / 10",
+    "genres": ["Action"],
+    "download links": {
+      "720p.BluRay": "https://yts.mx/torrent/download/F6675DBF352703C97E27F505DB526F8789D8A397",
+      "1080p.BluRay": "https://yts.mx/torrent/download/C2BB4FFF7B80ECDB6E249B41DD674D3866202202",
+      "720p.WEB": "https://yts.mx/torrent/download/01921C98436D302883010B963C8360E586E542D7",
+      "1080p.WEB": "https://yts.mx/torrent/download/456E898A00FE586DEE9AC3A110D39A1324AB6AC5"
+    }
+  },
+  "Hold Fast, Good Luck": {
+    "title": "Hold Fast, Good Luck",
+    "year": "2020",
+    "ratings": "5.5 / 10",
+    "genres": ["Action", "Drama"],
+    "download links": {
+      "720p.WEB": "https://yts.mx/torrent/download/56F946158FF35F301E2A4F8F2555FE57BF200E59",
+      "1080p.WEB": "https://yts.mx/torrent/download/212E3BD27D2825C9CCDB09630E64BD96C956163C"
+    }
+  },
+  "Fast and Loose": {
+    "title": "Fast and Loose",
+    "year": "1930",
+    "ratings": "6.2 / 10",
+    "genres": ["Comedy", "Romance"],
+    "download links": {
+      "720p.BluRay": "https://yts.mx/torrent/download/96EA0E22F5FF0C0B88CB418F9FCC07090EF7EE17",
+      "1080p.BluRay": "https://yts.mx/torrent/download/FB51CD09ACEAB20CD5F75C3A31816F7A47D634DA"
+    }
+  }
+}
