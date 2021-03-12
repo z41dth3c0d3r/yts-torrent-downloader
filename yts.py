@@ -41,7 +41,11 @@ if (
     -my movie year    (year of the movie like 2021)
     -l  language      run "main.py -showLanguages to view all languages"
 
-    -show showing number of movies"""
+    -show showing number of movies
+    
+    for example: getting 10 horror movies released on 2021
+
+        python yts.py -my 2021 -mg horror -show 10"""
 
     # url structure
     # https://yts.mx/browse-movies/hack/720p/action/4/oldest/2019/foreign
